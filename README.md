@@ -11,7 +11,7 @@ Minecraft plugin for Paper/Folia 1.21.10 that provides kill commands with config
 - **Configurable** - Enable/disable plugin functionality via config
 - **Multiple commands** - Separate commands for different use cases
 - **Permission-based** - Proper permission system with op defaults
-- **
+- **Random spawn usage** - You can set from X 0, Z 0 to a radius for spawning randomly
 - **Tab completion** - Smart tab completion for player names and commands
 
 ## 🦺 Commands
@@ -20,7 +20,7 @@ Minecraft plugin for Paper/Folia 1.21.10 that provides kill commands with config
 - `/kill <player>` - Kill a specific player (requires permission)
 - `/kill reload` - Reload the plugin configuration (ops only)
 - `/suicide` - Kill yourself (alternative to `/kill` with no arguments)
-- '/kill @e[type=entity]' - 
+- `/kill @e[type=entity]` - Kills entites like snowballs and any mob you would want! (ops only)
 
 ## 💎 Permissions
 
