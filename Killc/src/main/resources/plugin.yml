@@ -10,7 +10,7 @@ commands:
   kill:
     description: Kills yourself or another player. Use "/kill reload" to reload config.
     usage: "/kill [player|@e[type=...]|reload]"
-    permission: killc.use
+    permission: killc.self
     permission-message: "You don't have permission to use this command!"
   suicide:
     description: Kills yourself
@@ -20,7 +20,7 @@ commands:
 
 permissions:
   killc.self:
-    description: Allows using basic kill commands
+    description: Allows using basic kill commands on yourself
     default: true
   killc.others:
     description: Allows killing other players
@@ -35,7 +35,7 @@ permissions:
     description: Gives access to all KillC commands
     default: op
     children:
-      killc.use: true
+      killc.self: true
       killc.others: true
       killc.selector: true
       killc.reload: true

@@ -147,8 +147,8 @@ public final class KillC extends JavaPlugin implements Listener {
                 boolean looksLikeSelector = targetArg.startsWith("@");
 
                 if (looksLikeSelector) {
-                    if (!sender.isOp()) {
-                        sender.sendMessage(Component.text("Only operators can use selectors like @e[type=...]!").color(NamedTextColor.RED));
+                    if (!sender.hasPermission("killc.selector") && !sender.isOp()) {
+                        sender.sendMessage(Component.text("You don't have permission to use selectors!").color(NamedTextColor.RED));
                         return true;
                     }
                     List<Entity> selected;

@@ -16,18 +16,19 @@ Minecraft plugin for Paper/Folia 1.21.10 that provides kill commands with config
 
 ## 🦺 Commands
 
-- `/kill` - Kill yourself (no arguments) or another player
-- `/kill <player>` - Kill a specific player (requires permission)
-- `/kill reload` - Reload the plugin configuration (ops only)
-- `/suicide` - Kill yourself (alternative to `/kill` with no arguments)
-- `/kill @e[type=entity]` - Kills entites like snowballs and any mob you would want! (ops only)
+- `/kill` - Kill yourself (no arguments).
+- `/kill <player>` - Kill a specific player (requires `killc.others` permission).
+- `/kill @e[type=entity]` - Kills entities like snowballs and any mob you would want! (ops only, requires `killc.selector`).
+- `/kill reload` - Reload the plugin configuration (requires `killc.reload` permission).
+- `/suicide` - Kill yourself (alternative to `/kill` with no arguments, requires `killc.self`).
 
 ## 💎 Permissions
 
-- `killc.self` - Basic permission to use kill commands (default: true)
-- `killc.others` - Permission to kill other players (default: op)
-- `killc.reload` - Permission to reload plugin config (default: op)
-- `killc.*` - All permissions (default: op)
+- `killc.self` - Allows using basic kill commands on yourself (default: true).
+- `killc.others` - Allows killing other players (default: op).
+- `killc.selector` - Allows using selectors like @e[type=...] (default: op).
+- `killc.reload` - Allows reloading the plugin configuration (default: op).
+- `killc.*` - Gives access to all KillC commands (default: op).
 
 ## 🎨 Configuration
 
