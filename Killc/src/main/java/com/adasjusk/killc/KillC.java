@@ -73,6 +73,9 @@ public final class KillC extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (!useRandomSpawn) return;
+        if (event.isBedSpawn()) {
+            return;
+        }
         Player player = event.getPlayer();
         World world = player.getWorld();
         Random random = new Random();
