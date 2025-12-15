@@ -6,7 +6,7 @@
 
     <groupId>com.adasjusk.killc</groupId>
     <artifactId>killc</artifactId>
-    <version>2.1</version>
+    <version>3.0</version>
     <packaging>jar</packaging>
     <name>KillC</name>
     <description>A Minecraft plugin that adds kill commands with configurable options for Paper/Folia</description>
@@ -30,7 +30,7 @@
         <dependency>
         <groupId>io.papermc.paper</groupId>
         <artifactId>paper-api</artifactId>
-        <version>1.21.10-R0.1-SNAPSHOT</version>
+        <version>1.21.11-R0.1-SNAPSHOT</version>
         <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -81,7 +81,7 @@ public final class KillC extends JavaPlugin implements Listener {
         Random random = new Random();
         int x = random.nextInt(randomSpawnRadius * 2) - randomSpawnRadius;
         int z = random.nextInt(randomSpawnRadius * 2) - randomSpawnRadius;
-        Location loc = new Location(world, x, world.getHighestBlockYAt(x, z) + 1, z);
+        Location loc = new Location(world, x, world.getHighestBlockAt(x, z).getY() + 1, z);
         event.setRespawnLocation(loc);
     }
 
