@@ -1,5 +1,4 @@
 package com.adasjusk.killc;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -20,13 +19,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 public final class KillC extends JavaPlugin implements Listener {
-
     private boolean pluginEnabled = true;
     private boolean useRandomSpawn = true;
     private int randomSpawnRadius = 200;
-
     @Override
     public void onEnable() {
         saveDefaultConfig();
@@ -40,12 +36,10 @@ public final class KillC extends JavaPlugin implements Listener {
         this.getCommand("suicide").setExecutor(handler);
         this.getCommand("suicide").setTabCompleter(handler);
     }
-
     @Override
     public void onDisable() {
         getLogger().info("KillC plugin has been disabled!");
     }
-
     private void loadConfig() {
         reloadConfig();
         FileConfiguration config = getConfig();
@@ -53,23 +47,18 @@ public final class KillC extends JavaPlugin implements Listener {
         useRandomSpawn = config.getBoolean("use-random-spawning-after-death", true);
         randomSpawnRadius = config.getInt("random-spawn-radius", 200);
     }
-
     public boolean isPluginEnabled() {
         return pluginEnabled;
     }
-
     public boolean isUseRandomSpawn() {
         return useRandomSpawn;
     }
-
     public int getRandomSpawnRadius() {
         return randomSpawnRadius;
     }
-
     public void reloadPluginConfig() {
         loadConfig();
     }
-
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (!useRandomSpawn) return;
@@ -84,10 +73,8 @@ public final class KillC extends JavaPlugin implements Listener {
         Location loc = new Location(world, x, world.getHighestBlockAt(x, z).getY() + 1, z);
         event.setRespawnLocation(loc);
     }
-
     private static class KillCommandHandler implements CommandExecutor, TabCompleter {
         private final KillC plugin;
-
         public KillCommandHandler(KillC plugin) {
             this.plugin = plugin;
         }
@@ -121,14 +108,6 @@ public final class KillC extends JavaPlugin implements Listener {
                 player.sendMessage(Component.text("You have committed suicide!").color(NamedTextColor.RED));
                 return true;
             }
-
-            // i plan for this implementation but idk if it's good idea for dos
-            // if (selected.size() > 100) {
-            //     sender.sendMessage(Component.text("Too many targets!").color(NamedTextColor.RED));
-            //     return true;
-            // }
-
-
             if (commandName.equals("kill")) {
                 if (args.length == 0) {
                     if (sender instanceof Player) {
@@ -145,7 +124,6 @@ public final class KillC extends JavaPlugin implements Listener {
                         return true;
                     }
                 }
-
                 String targetArg = args[0];
                 boolean looksLikeSelector = targetArg.startsWith("@");
 
@@ -198,10 +176,8 @@ public final class KillC extends JavaPlugin implements Listener {
                 sender.sendMessage(Component.text("You have killed " + targetPlayer.getName() + "!").color(NamedTextColor.GREEN));
                 return true;
             }
-
             return false;
         }
-
         @Override
         public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
             List<String> completions = new ArrayList<>();

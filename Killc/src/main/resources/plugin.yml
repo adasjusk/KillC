@@ -1,8 +1,8 @@
 name: KillC
-version: '3.0'
+version: '4.0'
 main: com.adasjusk.killc.KillC
 author: adasjusk
-api-version: 1.21
+api-version: 1.26
 folia-supported: true
 description: A plugin that adds kill commands for players with configurable options
 

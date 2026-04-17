@@ -44,6 +44,6 @@ random-spawn-radius: 200
 
 ## 🔓 Compatibility
 
-- **Minecraft Version**: 1.21.x
+- **Minecraft Version**: 26.x
 - **Server Software**: Paper, Folia
-- **Java Version**: 21+
+- **Java Version**: 25+
