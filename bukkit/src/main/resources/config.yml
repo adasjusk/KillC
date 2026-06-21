@@ -1,0 +1,9 @@
+# KillC Plugin Configuration
+enabled: true
+# killc.self   - Allow killing yourself (ops have this by default)
+# killc.others - Allow killing other players (ops have this by default)
+# killc.selector - Allow selector usage (only ops can use type= selectors)
+# killc.reload - Allow reloading the plugin configuration (ops have this by default)
+use-random-spawning-after-death: true
+# Maximum random distance from (0,0) spawn for respawn
+random-spawn-radius: 200

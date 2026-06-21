@@ -3,9 +3,9 @@
 > This is official page for this plugin, any other fork/plugin that uses kill is not managed by me<br>
 > This plugin is safe to use, because any other fork/plugin that uses /kill could have exploits!!!
 
-Minecraft plugin for Paper/Folia 1.21.10 that provides kill commands with configurable options.
+Minecraft plugin for Paper/Folia 26.2 that provides kill commands with configurable options.
 
-## 🎇 Features
+## Features
 - **Single file implementation** - All functionality consolidated into one Java file
 - **Folia compatible** - Fully supports Folia server software
 - **Configurable** - Enable/disable plugin functionality via config
@@ -14,7 +14,7 @@ Minecraft plugin for Paper/Folia 1.21.10 that provides kill commands with config
 - **Random spawn usage** - You can set from X 0, Z 0 to a radius for spawning randomly
 - **Tab completion** - Smart tab completion for player names and commands
 
-## 🦺 Commands
+## Commands
 
 - `/kill` - Kill yourself (no arguments).
 - `/kill <player>` - Kill a specific player (requires `killc.others` permission).
@@ -22,7 +22,7 @@ Minecraft plugin for Paper/Folia 1.21.10 that provides kill commands with config
 - `/kill reload` - Reload the plugin configuration (requires `killc.reload` permission).
 - `/suicide` - Kill yourself (alternative to `/kill` with no arguments, requires `killc.self`).
 
-## 💎 Permissions
+## Permissions
 
 - `killc.self` - Allows using basic kill commands on yourself (default: true).
 - `killc.others` - Allows killing other players (default: op).
@@ -30,7 +30,7 @@ Minecraft plugin for Paper/Folia 1.21.10 that provides kill commands with config
 - `killc.reload` - Allows reloading the plugin configuration (default: op).
 - `killc.*` - Gives access to all KillC commands (default: op).
 
-## 🎨 Configuration
+## Configuration
 
 The plugin creates a `config.yml` file with the following options:
 
@@ -42,7 +42,7 @@ use-random-spawning-after-death: true
 random-spawn-radius: 200
 ```
 
-## 🔓 Compatibility
+## Compatibility
 
 - **Minecraft Version**: 26.x
 - **Server Software**: Paper, Folia

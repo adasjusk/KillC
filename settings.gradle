@@ -1,0 +1,16 @@
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+		maven { url = "https://maven.fabricmc.net/" }
+		mavenCentral()
+	}
+}
+
+plugins {
+	id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
+}
+rootProject.name = "KillC"
+include("bukkit")
+include("velocity")
+include("fabric")
+include("killc")

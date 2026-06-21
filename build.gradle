@@ -1,0 +1,25 @@
+plugins {
+	id "java"
+}
+subprojects {
+	apply plugin: "java"
+
+	group = rootProject.group
+	version = rootProject.version
+	repositories {
+		mavenCentral()
+		maven { url = "https://repo.papermc.io/repository/maven-public/" }
+		maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+		maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+		maven { url = "https://maven.fabricmc.net/" }
+	}
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(Integer.parseInt(project.property("java_version").toString()))
+		}
+	}
+	tasks.withType(JavaCompile).configureEach {
+		options.encoding = "UTF-8"
+		options.release = Integer.parseInt(project.property("java_version").toString())
+	}
+}

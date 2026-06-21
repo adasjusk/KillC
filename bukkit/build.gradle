@@ -1,0 +1,12 @@
+dependencies {
+	compileOnly "io.papermc.paper:paper-api:${project.property("paper_api_version")}"
+}
+
+processResources {
+	def props = [version: project.version]
+	inputs.properties(props)
+	filteringCharset = "UTF-8"
+	filesMatching("plugin.yml") {
+		expand(props)
+	}
+}

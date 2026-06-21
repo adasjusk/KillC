@@ -1,0 +1,24 @@
+plugins {
+	id "java"
+	id "com.gradleup.shadow" version "9.4.2"
+}
+dependencies {
+	implementation project(":bukkit")
+	implementation project(":velocity")
+	implementation(project(":fabric")) { transitive = false }
+}
+
+shadowJar {
+	archiveBaseName.set("KillC")
+	archiveClassifier.set("")
+	archiveVersion.set(project.version.toString())
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	mergeServiceFiles()
+	exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA", "module-info.class")
+}
+jar {
+	enabled = false
+}
+tasks.named("build") {
+	dependsOn(tasks.named("shadowJar"))
+}

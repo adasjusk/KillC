@@ -1,10 +1,10 @@
 name: KillC
-version: '4.0'
-main: com.adasjusk.killc.KillC
+version: '${version}'
+main: com.adasjusk.killc.bukkit.KillCBukkit
 author: adasjusk
-api-version: 1.26
+api-version: '1.21'
 folia-supported: true
-description: A plugin that adds kill commands for players with configurable options
+description: Kill commands with configurable options. Works on Spigot, Paper and Folia.
 
 commands:
   kill:
