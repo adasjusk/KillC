@@ -1,5 +1,4 @@
 package com.adasjusk.killc.bukkit;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,7 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.util.ArrayList;
@@ -25,29 +23,22 @@ import java.util.List;
 import java.util.Random;
 
 public final class KillCBukkit extends JavaPlugin implements Listener, PluginMessageListener {
-
-	// Channel used by the Velocity side of this same project to request a kill on a backend server.
+	
 	private static final String PROXY_CHANNEL = "killc:kill";
-
 	private boolean pluginEnabled = true;
 	private boolean useRandomSpawn = true;
 	private int randomSpawnRadius = 200;
-
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
 		loadConfig();
 		getLogger().info("KillC enabled (" + (FoliaUtil.isFolia() ? "Folia" : "Spigot/Paper") + " mode)");
-
 		KillCommandHandler handler = new KillCommandHandler(this);
 		getServer().getPluginManager().registerEvents(this, this);
-
 		getCommand("kill").setExecutor(handler);
 		getCommand("kill").setTabCompleter(handler);
 		getCommand("suicide").setExecutor(handler);
 		getCommand("suicide").setTabCompleter(handler);
-
-		// Listen for kill requests coming from the Velocity proxy module.
 		getServer().getMessenger().registerIncomingPluginChannel(this, PROXY_CHANNEL, this);
 	}
 
@@ -71,8 +62,6 @@ public final class KillCBukkit extends JavaPlugin implements Listener, PluginMes
 	public void reloadPluginConfig() {
 		loadConfig();
 	}
-
-	/** Kill an entity safely on its owning region thread (Folia) or directly (Spigot/Paper). */
 	void killEntity(Entity entity) {
 		FoliaUtil.runForEntity(this, entity, () -> {
 			if (entity instanceof Damageable) {
@@ -95,7 +84,6 @@ public final class KillCBukkit extends JavaPlugin implements Listener, PluginMes
 		event.setRespawnLocation(loc);
 	}
 
-	// Incoming plugin message from the Velocity proxy: payload is the target player name.
 	@Override
 	public void onPluginMessageReceived(String channel, Player ignored, byte[] message) {
 		if (!PROXY_CHANNEL.equals(channel)) return;
@@ -136,22 +124,22 @@ public final class KillCBukkit extends JavaPlugin implements Listener, PluginMes
 			}
 
 			if (!plugin.isPluginEnabled()) {
-				msg(sender, ChatColor.RED, "KillC is currently disabled!");
+				msg(sender, ChatColor.RED, "⚠ KillC is currently disabled!");
 				return true;
 			}
 
 			if (name.equals("suicide")) {
 				if (!(sender instanceof Player)) {
-					msg(sender, ChatColor.RED, "Only players can use the suicide command!");
+					msg(sender, ChatColor.RED, "⚠ Only players can use the suicide command!");
 					return true;
 				}
 				Player player = (Player) sender;
 				if (!player.hasPermission("killc.self") && !player.isOp()) {
-					msg(player, ChatColor.RED, "You don't have permission to kill yourself!");
+					msg(player, ChatColor.RED, "✘ You don't have permission to kill yourself! Grab other knifes!");
 					return true;
 				}
 				plugin.killEntity(player);
-				msg(player, ChatColor.RED, "You have committed suicide!");
+				msg(player, ChatColor.RED, "☠ You have committed suicide!");
 				return true;
 			}
 
@@ -160,33 +148,32 @@ public final class KillCBukkit extends JavaPlugin implements Listener, PluginMes
 					if (sender instanceof Player) {
 						Player player = (Player) sender;
 						if (!player.hasPermission("killc.self") && !player.isOp()) {
-							msg(player, ChatColor.RED, "You don't have permission to kill yourself!");
+							msg(player, ChatColor.RED, "⚠ You don't have permission to kill yourself! Grab other knifes!");
 							return true;
 						}
 						plugin.killEntity(player);
-						msg(player, ChatColor.RED, "You have killed yourself!");
+						msg(player, ChatColor.RED, "☠ You have killed yourself!");
 						return true;
 					}
-					msg(sender, ChatColor.RED, "Only players can kill themselves! Use /kill <player|selector>.");
+					msg(sender, ChatColor.RED, "❌ Only players can kill themselves! Use /kill <player|selector>.");
 					return true;
 				}
 
 				String targetArg = args[0];
-
 				if (targetArg.startsWith("@")) {
 					if (!sender.hasPermission("killc.selector") && !sender.isOp()) {
-						msg(sender, ChatColor.RED, "You don't have permission to use selectors!");
+						msg(sender, ChatColor.RED, "❌ You don't have permission to use selectors!");
 						return true;
 					}
 					List<Entity> selected;
 					try {
 						selected = Bukkit.selectEntities(sender, targetArg);
 					} catch (IllegalArgumentException ex) {
-						msg(sender, ChatColor.RED, "Invalid selector: " + ex.getMessage());
+						msg(sender, ChatColor.RED, "❌ Invalid selector: " + ex.getMessage());
 						return true;
 					}
 					if (selected.isEmpty()) {
-						msg(sender, ChatColor.RED, "No entities matched the selector.");
+						msg(sender, ChatColor.RED, "🗡 No entities matched the selector.");
 						return true;
 					}
 					int killedEntities = 0;
@@ -195,7 +182,7 @@ public final class KillCBukkit extends JavaPlugin implements Listener, PluginMes
 						if (e instanceof Player) {
 							Player p = (Player) e;
 							plugin.killEntity(p);
-							msg(p, ChatColor.RED, "You have been killed by " + sender.getName() + "!");
+							msg(p, ChatColor.RED, "🗡 You have been killed by " + sender.getName() + "!");
 							killedPlayers++;
 							killedEntities++;
 						} else if (e instanceof Damageable) {
@@ -203,24 +190,24 @@ public final class KillCBukkit extends JavaPlugin implements Listener, PluginMes
 							killedEntities++;
 						}
 					}
-					msg(sender, ChatColor.GREEN, "Killed " + killedEntities + " entities (" + killedPlayers + " players).");
+					msg(sender, ChatColor.GREEN, "🪓 Killed " + killedEntities + " entities (" + killedPlayers + " players).");
 					return true;
 				}
 
 				Player target = Bukkit.getPlayerExact(targetArg);
 				if (target == null) {
-					msg(sender, ChatColor.RED, "Player '" + targetArg + "' not found!");
+					msg(sender, ChatColor.RED, "♯ Player '" + targetArg + "' not found!");
 					return true;
 				}
 
 				boolean isSelf = sender instanceof Player && ((Player) sender).getUniqueId().equals(target.getUniqueId());
 				if (!sender.hasPermission("killc.others") && !sender.isOp() && !isSelf) {
-					msg(sender, ChatColor.RED, "You don't have permission to kill other players!");
+					msg(sender, ChatColor.RED, "❌ You don't have permission to kill other players!");
 					return true;
 				}
 				plugin.killEntity(target);
-				msg(target, ChatColor.RED, "You have been killed by " + sender.getName() + "!");
-				msg(sender, ChatColor.GREEN, "You have killed " + target.getName() + "!");
+				msg(target, ChatColor.RED, "☠ You have been killed by " + sender.getName() + "!");
+				msg(sender, ChatColor.GREEN, "🗡 You have killed " + target.getName() + "!");
 				return true;
 			}
 			return false;

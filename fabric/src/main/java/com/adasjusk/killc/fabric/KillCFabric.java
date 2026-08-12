@@ -30,16 +30,16 @@ public final class KillCFabric implements ModInitializer {
 			dispatcher.register(Commands.literal("suicide").executes(ctx -> {
 				ServerPlayer player = ctx.getSource().getPlayerOrException();
 				player.setHealth(0.0f);
-				player.sendSystemMessage(Component.literal("You have committed suicide!"));
+				player.sendSystemMessage(Component.literal("☠ You have committed suicide!"));
 				return 1;
 			}));
-			// /kill            - self
-			// /kill <player>   - requires perm 2
+			//kill          - self
+			//kill <player> - requires perm 2
 			dispatcher.register(Commands.literal("killc")
 				.executes(ctx -> {
 					ServerPlayer player = ctx.getSource().getPlayerOrException();
 					player.setHealth(0.0f);
-					player.sendSystemMessage(Component.literal("You have killed yourself!"));
+					player.sendSystemMessage(Component.literal("☠ You have killed yourself!"));
 					return 1;
 				})
 				.then(Commands.argument("target", EntityArgument.player())
@@ -47,8 +47,8 @@ public final class KillCFabric implements ModInitializer {
 					.executes(ctx -> {
 						ServerPlayer target = EntityArgument.getPlayer(ctx, "target");
 						target.setHealth(0.0f);
-						target.sendSystemMessage(Component.literal("You have been killed by " + sourceName(ctx.getSource()) + "!"));
-						ctx.getSource().sendSuccess(() -> Component.literal("You have killed " + target.getName().getString() + "!"), false);
+						target.sendSystemMessage(Component.literal("☠ You have been killed by " + sourceName(ctx.getSource()) + "!"));
+						ctx.getSource().sendSuccess(() -> Component.literal("🗡 You have killed " + target.getName().getString() + "!"), false);
 						return 1;
 					})));
 		});
