@@ -2,21 +2,9 @@ name: KillC
 version: '${version}'
 main: com.adasjusk.killc.bukkit.KillCBukkit
 author: adasjusk
-api-version: '1.21'
+api-version: '${api_version}'
 folia-supported: true
-description: Kill commands with configurable options. Works on Spigot, Paper and Folia.
-
-commands:
-  kill:
-    description: Kills yourself or another player. Use "/kill reload" to reload config.
-    usage: "/kill [player|@e[type=...]|reload]"
-    permission: killc.self
-    permission-message: "You don't have permission to use this command!"
-  suicide:
-    description: Kills yourself
-    usage: "/suicide"
-    permission: killc.self
-    permission-message: "You don't have permission to use this command!"
+description: Kill commands with configurable options. Works on Paper, Folia and Velocity.
 
 permissions:
   killc.self:

@@ -1,0 +1,52 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          # Must match java_version in gradle.properties.
+          java-version: '25'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v5
+
+      - name: Build
+        run: ./gradlew build --stacktrace
+
+      - name: Check the plugin jar is loadable
+        run: |
+          set -euo pipefail
+          jar="$(ls build/dist/KillC-*.jar | grep -v fabric)"
+          echo "Checking $jar"
+          unzip -l "$jar" | grep -q ' plugin.yml$'
+          unzip -l "$jar" | grep -q ' velocity-plugin.json$'
+          ! unzip -l "$jar" | grep -q ' fabric.mod.json$'
+          echo "OK"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KillC
+          path: build/dist/*.jar
+          if-no-files-found: error

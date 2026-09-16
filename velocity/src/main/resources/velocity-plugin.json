@@ -1,0 +1,9 @@
+{
+	"id": "killc",
+	"name": "KillC",
+	"version": "${version}",
+	"description": "Kill commands across a Velocity network.",
+	"authors": ["adasjusk"],
+	"main": "com.adasjusk.killc.velocity.KillCVelocity",
+	"dependencies": []
+}

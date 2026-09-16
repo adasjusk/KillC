@@ -1,14 +1,24 @@
 plugins {
-	id "net.fabricmc.fabric-loom" version "${loom_version}"
+	id "net.fabricmc.fabric-loom"
 }
+base {
+	archivesName = "KillC-fabric"
+}
+
 dependencies {
 	minecraft "com.mojang:minecraft:${project.property("minecraft_version")}"
 	implementation "net.fabricmc:fabric-loader:${project.property("loader_version")}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.property("fabric_api_version")}"
 }
 processResources {
-	def props = [version: project.version, minecraft_version: project.property("minecraft_version")]
+	def props = [
+		version          : project.version,
+		minecraft_version: project.property("minecraft_version"),
+		loader_version   : project.property("loader_version"),
+		java_version     : project.property("java_version"),
+	]
 	inputs.properties(props)
+	filteringCharset = "UTF-8"
 	filesMatching("fabric.mod.json") {
 		expand(props)
 	}

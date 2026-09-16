@@ -1,13 +1,20 @@
 pluginManagement {
 	repositories {
 		gradlePluginPortal()
-		maven { url = "https://maven.fabricmc.net/" }
-		mavenCentral()
+		maven {
+			name = "fabricmc"
+			url = "https://maven.fabricmc.net/"
+		}
+	}
+	plugins {
+		id "net.fabricmc.fabric-loom" version "${loom_version}"
+		id "com.gradleup.shadow" version "${shadow_version}"
 	}
 }
 plugins {
 	id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
 }
+
 rootProject.name = "KillC"
 include("bukkit")
 include("velocity")

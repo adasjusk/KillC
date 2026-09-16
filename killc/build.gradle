@@ -1,24 +1,85 @@
 plugins {
-	id "java"
-	id "com.gradleup.shadow" version "9.6.1"
+	id "com.gradleup.shadow"
 }
+
 dependencies {
 	implementation project(":bukkit")
 	implementation project(":velocity")
-	implementation(project(":fabric")) { transitive = false }
 }
 
 shadowJar {
 	archiveBaseName.set("KillC")
 	archiveClassifier.set("")
 	archiveVersion.set(project.version.toString())
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	configurations = [project.configurations.runtimeClasspath]
+	dependencies {
+		include(project(":bukkit"))
+		include(project(":velocity"))
+	}
+
 	mergeServiceFiles()
-	exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA", "module-info.class")
+	exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA", "META-INF/versions/**", "module-info.class")
+
+	manifest {
+		attributes(
+			"Implementation-Title": "KillC",
+			"Implementation-Version": project.version.toString(),
+		)
+	}
 }
+
 jar {
 	enabled = false
 }
+
+def verifyPluginJar = tasks.register("verifyPluginJar") {
+	group = "verification"
+	description = "Asserts the shaded jar is actually loadable by Paper and Velocity."
+
+	def jarFile = tasks.named("shadowJar").flatMap { it.archiveFile }
+	inputs.file(jarFile)
+	// No real output; this is a pure check.
+	outputs.upToDateWhen { false }
+
+	doLast {
+		def file = jarFile.get().asFile
+		def required = [
+			"plugin.yml",
+			"config.yml",
+			"velocity-plugin.json",
+			"com/adasjusk/killc/bukkit/KillCBukkit.class",
+			"com/adasjusk/killc/velocity/KillCVelocity.class",
+		]
+		def entries = [] as Set
+		new java.util.zip.ZipFile(file).withCloseable { zip ->
+			zip.entries().each { entries << it.name }
+		}
+
+		def missing = required.findAll { !entries.contains(it) }
+		if (!missing.isEmpty()) {
+			throw new GradleException(
+				"${file.name} is missing ${missing}. Paper would refuse to load this jar. " +
+				"Check that :bukkit/:velocity resources made it into the shadow jar."
+			)
+		}
+
+		// A Fabric mod inside a Paper plugin is always a packaging mistake.
+		if (entries.contains("fabric.mod.json")) {
+			throw new GradleException("${file.name} contains fabric.mod.json; the Fabric mod must ship separately.")
+		}
+
+		logger.lifecycle("Verified ${file.name}: plugin.yml, config.yml and velocity-plugin.json present.")
+	}
+}
+
+tasks.named("shadowJar") {
+	finalizedBy(verifyPluginJar)
+}
+
+tasks.named("assemble") {
+	dependsOn(verifyPluginJar)
+}
+
 tasks.named("build") {
 	dependsOn(tasks.named("shadowJar"))
 }

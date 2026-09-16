@@ -1,25 +1,54 @@
 plugins {
-	id "java"
+	id "base"
 }
+
+def javaVersion = Integer.parseInt(project.property("java_version").toString())
+
 subprojects {
 	apply plugin: "java"
-
 	group = rootProject.group
 	version = rootProject.version
 	repositories {
 		mavenCentral()
-		maven { url = "https://repo.papermc.io/repository/maven-public/" }
-		maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
-		maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
-		maven { url = "https://maven.fabricmc.net/" }
-	}
-	java {
-		toolchain {
-			languageVersion = JavaLanguageVersion.of(Integer.parseInt(project.property("java_version").toString()))
+		maven {
+			name = "papermc"
+			url = "https://repo.papermc.io/repository/maven-public/"
+		}
+		maven {
+			name = "fabricmc"
+			url = "https://maven.fabricmc.net/"
 		}
 	}
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(javaVersion)
+		}
+	}
+
 	tasks.withType(JavaCompile).configureEach {
 		options.encoding = "UTF-8"
-		options.release = Integer.parseInt(project.property("java_version").toString())
+		options.release = javaVersion
+		options.compilerArgs += ["-Xlint:all,-processing,-classfile,-serial", "-Werror"]
 	}
+
+	tasks.withType(AbstractArchiveTask).configureEach {
+		preserveFileTimestamps = false
+		reproducibleFileOrder = true
+	}
+}
+tasks.register("dist", Copy) {
+	group = "build"
+	description = "Builds every platform artifact into build/dist."
+	into layout.buildDirectory.dir("dist")
+	dependsOn(project(":killc").tasks.named("verifyPluginJar"))
+	from(project(":killc").tasks.named("shadowJar"))
+	from(provider {
+		def fabricTasks = project(":fabric").tasks
+		fabricTasks.findByName("remapJar") ?: fabricTasks.getByName("jar")
+	})
+}
+
+tasks.named("build") {
+	dependsOn(tasks.named("dist"))
 }

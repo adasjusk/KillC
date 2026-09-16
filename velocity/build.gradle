@@ -1,4 +1,12 @@
 dependencies {
 	compileOnly "com.velocitypowered:velocity-api:${project.property("velocity_version")}"
-	annotationProcessor "com.velocitypowered:velocity-api:${project.property("velocity_version")}"
+}
+
+processResources {
+	def props = [version: project.version]
+	inputs.properties(props)
+	filteringCharset = "UTF-8"
+	filesMatching("velocity-plugin.json") {
+		expand(props)
+	}
 }

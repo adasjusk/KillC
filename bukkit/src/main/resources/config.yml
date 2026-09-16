@@ -1,9 +1,28 @@
 # KillC Plugin Configuration
+# Permissions (set these with your permissions plugin, not here):
+#   killc.self     - kill yourself                        (default: everyone)
+#   killc.others   - kill other players                   (default: op)
+#   killc.selector - use @e/@a style selectors            (default: op)
+#   killc.reload   - reload this file with /kill reload   (default: op)
+
 enabled: true
-# killc.self   - Allow killing yourself (ops have this by default)
-# killc.others - Allow killing other players (ops have this by default)
-# killc.selector - Allow selector usage (only ops can use type= selectors)
-# killc.reload - Allow reloading the plugin configuration (ops have this by default)
 use-random-spawning-after-death: true
-# Maximum random distance from (0,0) spawn for respawn
+
+# Maximum distance from (0,0) for a random respawn, in blocks.
+# Must be between 1 and 29999983; values outside that range are clamped.
 random-spawn-radius: 200
+
+# Cross-server support via a Velocity proxy.
+proxy:
+  # Only turn this on if you run KillC on your Velocity proxy as well.
+  # While this is false, KillC ignores the plugin-messaging channel entirely.
+  enabled: false
+
+  # Shared secret. Must be identical to the "secret" in the proxy's
+  # plugins/killc/config.properties, and must not be left at the default.
+  #
+  # Why this exists: plugin messages arriving from a backend connection are
+  # indistinguishable from ones a modded *client* sends on the same channel.
+  # Without a secret, any player could kill any other player on the network.
+  # Kill requests that do not carry the right secret are dropped.
+  secret: "change-me"
