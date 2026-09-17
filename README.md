@@ -1,4 +1,4 @@
-# KillC Official Plugin
+# KillC Plugin
 > [!WARNING]
 > This is the official page for this plugin. This plugin is safe to use,<br> because any other fork/plugin that uses /kill could have exploits!!!
 
