@@ -1,9 +1,6 @@
 # KillC Official Plugin
 > [!WARNING]
-> This is the official page for this plugin; any other fork/plugin that uses kill is not managed by me.<br>
-> This plugin is safe to use, because any other fork/plugin that uses /kill could have exploits!!!
-
-Kill commands with configurable options for **Paper / Folia**, **Velocity** and **Fabric** servers.
+> This is the official page for this plugin. This plugin is safe to use,<br> because any other fork/plugin that uses /kill could have exploits!!!
 
 ## Downloads
 
@@ -24,21 +21,11 @@ Each release ships two files. Install the one that matches your server:
 
 ## Commands
 
-### Paper / Folia
+### Paper / Folia / Velocity / Fabric
 - `/kill` - Kill yourself.
 - `/kill <player>` - Kill a specific player (requires `killc.others`).
 - `/kill @e[type=...]` - Kill entities matched by a selector, including non-living ones like snowballs (requires `killc.selector`).
 - `/kill reload` - Reload the plugin configuration (requires `killc.reload`).
-- `/suicide` - Kill yourself.
-
-### Velocity
-- `/kill` - Kill yourself.
-- `/kill <player>` - Kill any player on the network (requires `killc.others`).
-- `/suicide` - Kill yourself.
-
-### Fabric
-- `/killc` - Kill yourself. (Vanilla owns `/kill`, so the mod does not override it.)
-- `/killc <player>` - Kill a player (permission level 2).
 - `/suicide` - Kill yourself.
 
 ## Permissions
@@ -81,8 +68,10 @@ secret, so a modded client cannot forge one.
 }
 ```
 
-## Compatibility
+## Software
 
 - **Minecraft**: 26.2 (see `minecraft_version` / `api_version` in `gradle.properties`)
 - **Server software**: Paper, Folia, Purpur, Velocity 4.x, Fabric
 - **Java**: 25+
+This was made by human
+Made with love 🧡
