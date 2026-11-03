@@ -68,6 +68,11 @@ secret, so a modded client cannot forge one.
 }
 ```
 
+## Horizon
+
+`horizon/` is a native mod for [Horizon](https://playhorizon.dev/docs/make-a-mod)
+Config: `config/killc.json`, the same keys as Fabric.
+
 ## Software
 
 - **Minecraft**: 26.2 (see `minecraft_version` / `api_version` in `gradle.properties`)

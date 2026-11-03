@@ -1,0 +1,1 @@
+fn killc_died(player: u128) { crate::game::killc::died(player); }
